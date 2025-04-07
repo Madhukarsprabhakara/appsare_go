@@ -226,7 +226,7 @@ func performFifteenMinuteTask() {
 }
 func main() {
 	//Connect to the db
-	db, err := sql.Open("pgx", "host=192.168.7.232 port=5434 user=postgres password=password dbname=appsare sslmode=disable")
+	db, err := sql.Open("pgx", "host=192.168.0.3 port=5433 user=postgres password=password dbname=appsare sslmode=disable")
 	defer db.Close()
 	err = db.Ping()
 	if err != nil {
