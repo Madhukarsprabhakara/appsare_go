@@ -1,0 +1,17 @@
+networks:
+  appsare_go:
+    name: appsare_go
+services:
+  apr_go:
+      build:
+        context: .
+        dockerfile: go.dockerfile
+      container_name: apr_go
+      entrypoint: ["go", "run","main.go"]
+      ports:
+        - 3000:3000
+      volumes:
+        - ./src:/var/www/go_src
+      working_dir: /var/www/go_src
+      networks:
+        - appsare_go
