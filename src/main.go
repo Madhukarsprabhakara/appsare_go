@@ -137,7 +137,16 @@ func performTask(db *sql.DB) {
 			startTimeWTz := time.Now().UTC().Format("2006-01-02 15:04:05")
 			startTime := time.Now()
 			startTimeEpoch := startTime.Unix()
-			resp, err := client.Head(url)
+			var resp *http.Response
+			var err error
+			for attempt := 1; attempt <= 2; attempt++ {
+				resp, err = client.Head(url)
+				if err == nil {
+					break // Exit the loop if the request succeeds
+				}
+				fmt.Printf("Attempt %d failed for tracker %d (%s): %v\n", attempt, id, url, err)
+				time.Sleep(2 * time.Second) // Wait for 2 seconds before retrying
+			}
 			endTime := time.Now()
 			endTimeEpoch := endTime.Unix()
 			responseTime := time.Since(startTime).Seconds()
